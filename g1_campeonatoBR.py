@@ -1,9 +1,10 @@
 import requests
 import json
 import csv
+
+
 dados_jogos = []
 header_csv = ["Rodada", "Mandante", "Placar Mandante", "Visitante", "Placar Visitante"]
-
 
 headers = {
     'authority': 'api.globoesporte.globo.com',
@@ -19,6 +20,7 @@ headers = {
     'sec-fetch-site': 'same-site',
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',
 }
+
 for numero_rodada in range(1, 39, 1):
     response = requests.get(
         f'https://api.globoesporte.globo.com/tabela/009b5a68-dd09-46b8-95b3-293a2d494366/fase/brasileiro-serie-b-2022-fase-unica/rodada/{numero_rodada}/jogos/',
@@ -37,8 +39,5 @@ for numero_rodada in range(1, 39, 1):
 
 with open('serie_b.csv', 'w', encoding='UTF8', newline='') as texto:
     writer = csv.writer(texto)
-    # write the header
     writer.writerow(header_csv)
-
     writer.writerows(dados_jogos)
-print()
