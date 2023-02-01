@@ -5,9 +5,10 @@ import openpyxl
 wrkbk = openpyxl.load_workbook("tabela_serieB.xlsx")
 todas_rodadas = []
 sh = wrkbk.active
-
+cont = -1
 for sh in wrkbk.worksheets:
     uma_rodada = []
+    cont += 1
     for i in range(2, sh.max_row + 1):
 
         rodada = sh.cell(row=i, column=2).value
@@ -23,10 +24,12 @@ for sh in wrkbk.worksheets:
         else:
             total_pontos_mandante = 0
             total_pontos_visitante = 3
+        if cont > 0:
+            ponto_anterior_mandante = next(item["saldo_gols"] for item in todas_rodadas[cont-1] if item["time"] == mandante)
+            ponto_anterior_visitante = next(item["saldo_gols"] for item in todas_rodadas[cont-1] if item["time"] == visitante)
         classificacao_mandante = {'time': mandante, 'total_pontos': total_pontos_mandante, 'gols_pro': placar_mandante, 'gols_contra': placar_visitante, 'saldo_gols': placar_mandante-placar_visitante}
         classificacao_visitante = {'time': visitante, 'total_pontos': total_pontos_visitante, 'gols_pro': placar_visitante, 'gols_contra': placar_mandante, 'saldo_gols': placar_visitante-placar_mandante}
         uma_rodada.append(classificacao_visitante)
         uma_rodada.append(classificacao_mandante)
     todas_rodadas.append(uma_rodada)
 
-print()
