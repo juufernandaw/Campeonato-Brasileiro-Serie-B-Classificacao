@@ -25,6 +25,7 @@ for sh in wrkbk.worksheets:
             total_pontos_mandante = 0
             total_pontos_visitante = 3
         if cont > 0:
+            # iterate just once and then save the found value; why? to optimize
             saldo_mandante = next(item["saldo_gols"] for item in todas_rodadas[cont-1] if item["time"] == mandante)
             saldo_visitante = next(item["saldo_gols"] for item in todas_rodadas[cont-1] if item["time"] == visitante)
             gols_pro_mandante = next(item["gols_pro"] for item in todas_rodadas[cont-1] if item["time"] == mandante)
@@ -37,9 +38,12 @@ for sh in wrkbk.worksheets:
             saldo_mandante = placar_mandante-placar_visitante
             saldo_visitante = placar_visitante-placar_mandante
             pontos_mandante = pontos_visitante = gols_pro_mandante = gols_pro_visitante = gols_contra_mandante = gols_contra_visitante = 0
+        # saldo de gols is not working. Gotta do module in sum
         classificacao_mandante = {'time': mandante, 'total_pontos': pontos_mandante+total_pontos_mandante, 'gols_pro': gols_pro_mandante+placar_mandante, 'gols_contra': gols_contra_mandante+placar_visitante, 'saldo_gols': saldo_mandante-placar_visitante}
         classificacao_visitante = {'time': visitante, 'total_pontos': pontos_visitante+total_pontos_visitante, 'gols_pro': gols_pro_visitante+placar_visitante, 'gols_contra': gols_contra_visitante+placar_mandante, 'saldo_gols': saldo_visitante-placar_mandante}
         uma_rodada.append(classificacao_visitante)
         uma_rodada.append(classificacao_mandante)
     todas_rodadas.append(uma_rodada)
+
+print()
 
