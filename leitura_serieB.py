@@ -35,12 +35,11 @@ for sh in wrkbk.worksheets:
             pontos_mandante = next(item["total_pontos"] for item in todas_rodadas[cont-1] if item["time"] == mandante)
             pontos_visitante = next(item["total_pontos"] for item in todas_rodadas[cont-1] if item["time"] == visitante)
         else:
-            saldo_mandante = placar_mandante-placar_visitante
+            saldo_mandante = 0
             saldo_visitante = placar_visitante-placar_mandante
             pontos_mandante = pontos_visitante = gols_pro_mandante = gols_pro_visitante = gols_contra_mandante = gols_contra_visitante = 0
-        # saldo de gols is not working. Gotta do module in sum
-        classificacao_mandante = {'time': mandante, 'total_pontos': pontos_mandante+total_pontos_mandante, 'gols_pro': gols_pro_mandante+placar_mandante, 'gols_contra': gols_contra_mandante+placar_visitante, 'saldo_gols': saldo_mandante-placar_visitante}
-        classificacao_visitante = {'time': visitante, 'total_pontos': pontos_visitante+total_pontos_visitante, 'gols_pro': gols_pro_visitante+placar_visitante, 'gols_contra': gols_contra_visitante+placar_mandante, 'saldo_gols': saldo_visitante-placar_mandante}
+        classificacao_mandante = {'time': mandante, 'total_pontos': pontos_mandante+total_pontos_mandante, 'gols_pro': gols_pro_mandante+placar_mandante, 'gols_contra': gols_contra_mandante+placar_visitante, 'saldo_gols': (saldo_mandante+placar_mandante)-placar_visitante}
+        classificacao_visitante = {'time': visitante, 'total_pontos': pontos_visitante+total_pontos_visitante, 'gols_pro': gols_pro_visitante+placar_visitante, 'gols_contra': gols_contra_visitante+placar_mandante, 'saldo_gols': (saldo_visitante+placar_visitante)-placar_mandante}
         uma_rodada.append(classificacao_visitante)
         uma_rodada.append(classificacao_mandante)
     todas_rodadas.append(uma_rodada)
