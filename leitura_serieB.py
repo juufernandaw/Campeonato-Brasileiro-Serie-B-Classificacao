@@ -26,17 +26,18 @@ for sh in wrkbk.worksheets:
             total_pontos_visitante = 3
         if cont > 0:
             # iterate just once and then save the found value; why? to optimize
-            saldo_mandante = next(item["saldo_gols"] for item in todas_rodadas[cont-1] if item["time"] == mandante)
-            saldo_visitante = next(item["saldo_gols"] for item in todas_rodadas[cont-1] if item["time"] == visitante)
-            gols_pro_mandante = next(item["gols_pro"] for item in todas_rodadas[cont-1] if item["time"] == mandante)
-            gols_pro_visitante = next(item["gols_pro"] for item in todas_rodadas[cont-1] if item["time"] == visitante)
-            gols_contra_mandante = next(item["gols_contra"] for item in todas_rodadas[cont-1] if item["time"] == mandante)
-            gols_contra_visitante = next(item["gols_contra"] for item in todas_rodadas[cont-1] if item["time"] == visitante)
-            pontos_mandante = next(item["total_pontos"] for item in todas_rodadas[cont-1] if item["time"] == mandante)
-            pontos_visitante = next(item["total_pontos"] for item in todas_rodadas[cont-1] if item["time"] == visitante)
+            time_mandante = next(item for item in todas_rodadas[cont-1] if item["time"] == mandante)
+            time_visitante = next(item for item in todas_rodadas[cont-1] if item["time"] == visitante)
+            saldo_mandante = time_mandante["saldo_gols"]
+            saldo_visitante = time_visitante["saldo_gols"]
+            gols_pro_mandante = time_mandante["gols_pro"]
+            gols_pro_visitante = time_visitante["gols_pro"]
+            gols_contra_mandante = time_mandante["gols_contra"]
+            gols_contra_visitante = time_visitante["gols_contra"]
+            pontos_mandante = time_mandante["total_pontos"]
+            pontos_visitante = time_visitante["total_pontos"]
         else:
-            saldo_mandante = 0
-            saldo_visitante = placar_visitante-placar_mandante
+            saldo_mandante = saldo_visitante = 0
             pontos_mandante = pontos_visitante = gols_pro_mandante = gols_pro_visitante = gols_contra_mandante = gols_contra_visitante = 0
         classificacao_mandante = {'time': mandante, 'total_pontos': pontos_mandante+total_pontos_mandante, 'gols_pro': gols_pro_mandante+placar_mandante, 'gols_contra': gols_contra_mandante+placar_visitante, 'saldo_gols': (saldo_mandante+placar_mandante)-placar_visitante}
         classificacao_visitante = {'time': visitante, 'total_pontos': pontos_visitante+total_pontos_visitante, 'gols_pro': gols_pro_visitante+placar_visitante, 'gols_contra': gols_contra_visitante+placar_mandante, 'saldo_gols': (saldo_visitante+placar_visitante)-placar_mandante}
