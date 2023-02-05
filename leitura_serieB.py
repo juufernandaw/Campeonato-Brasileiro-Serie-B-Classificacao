@@ -1,4 +1,6 @@
 # import module
+import operator
+
 import openpyxl
 
 # load excel with its path
@@ -36,14 +38,19 @@ for sh in wrkbk.worksheets:
             gols_contra_visitante = time_visitante["gols_contra"]
             pontos_mandante = time_mandante["total_pontos"]
             pontos_visitante = time_visitante["total_pontos"]
+            vitorias_mandante = time_mandante["vitorias"]
+            vitorias_visitante = time_visitante["vitorias"]
         else:
             saldo_mandante = saldo_visitante = 0
-            pontos_mandante = pontos_visitante = gols_pro_mandante = gols_pro_visitante = gols_contra_mandante = gols_contra_visitante = 0
-        classificacao_mandante = {'time': mandante, 'total_pontos': pontos_mandante+total_pontos_mandante, 'gols_pro': gols_pro_mandante+placar_mandante, 'gols_contra': gols_contra_mandante+placar_visitante, 'saldo_gols': (saldo_mandante+placar_mandante)-placar_visitante}
-        classificacao_visitante = {'time': visitante, 'total_pontos': pontos_visitante+total_pontos_visitante, 'gols_pro': gols_pro_visitante+placar_visitante, 'gols_contra': gols_contra_visitante+placar_mandante, 'saldo_gols': (saldo_visitante+placar_visitante)-placar_mandante}
+            pontos_mandante = pontos_visitante = gols_pro_mandante = gols_pro_visitante = gols_contra_mandante = gols_contra_visitante = vitorias_mandante = vitorias_visitante = 0
+        vitorias_mandante = vitorias_mandante + 1 if total_pontos_mandante == 3 else vitorias_mandante
+        vitorias_visitante = vitorias_visitante + 1 if total_pontos_visitante == 3 else vitorias_visitante
+        classificacao_mandante = {'time': mandante, 'total_pontos': pontos_mandante+total_pontos_mandante, 'gols_pro': gols_pro_mandante+placar_mandante, 'gols_contra': gols_contra_mandante+placar_visitante, 'saldo_gols': (saldo_mandante+placar_mandante)-placar_visitante, 'vitorias': vitorias_mandante}
+        classificacao_visitante = {'time': visitante, 'total_pontos': pontos_visitante+total_pontos_visitante, 'gols_pro': gols_pro_visitante+placar_visitante, 'gols_contra': gols_contra_visitante+placar_mandante, 'saldo_gols': (saldo_visitante+placar_visitante)-placar_mandante, 'vitorias': vitorias_visitante}
         uma_rodada.append(classificacao_visitante)
         uma_rodada.append(classificacao_mandante)
     todas_rodadas.append(uma_rodada)
 
-print()
+rodada_ordenada = sorted(todas_rodadas[-1], key=operator.itemgetter('total_pontos', 'vitorias', 'saldo_gols', 'gols_pro'), reverse=True)
+
 
