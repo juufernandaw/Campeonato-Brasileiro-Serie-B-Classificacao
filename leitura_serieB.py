@@ -44,17 +44,17 @@ for sh in wrkbk.worksheets:
             pontos_mandante = pontos_visitante = gols_pro_mandante = gols_pro_visitante = gols_contra_mandante = gols_contra_visitante = vitorias_mandante = vitorias_visitante = 0
         vitorias_mandante = vitorias_mandante + 1 if total_pontos_mandante == 3 else vitorias_mandante
         vitorias_visitante = vitorias_visitante + 1 if total_pontos_visitante == 3 else vitorias_visitante
-        classificacao_mandante = {'time': mandante, 'total_pontos': pontos_mandante+total_pontos_mandante, 'gols_pro': gols_pro_mandante+placar_mandante, 'gols_contra': gols_contra_mandante+placar_visitante, 'saldo_gols': (saldo_mandante+placar_mandante)-placar_visitante, 'vitorias': vitorias_mandante}
-        classificacao_visitante = {'time': visitante, 'total_pontos': pontos_visitante+total_pontos_visitante, 'gols_pro': gols_pro_visitante+placar_visitante, 'gols_contra': gols_contra_visitante+placar_mandante, 'saldo_gols': (saldo_visitante+placar_visitante)-placar_mandante, 'vitorias': vitorias_visitante}
+        classificacao_mandante = {'rodada': rodada, 'time': mandante, 'total_pontos': pontos_mandante+total_pontos_mandante, 'gols_pro': gols_pro_mandante+placar_mandante, 'gols_contra': gols_contra_mandante+placar_visitante, 'saldo_gols': (saldo_mandante+placar_mandante)-placar_visitante, 'vitorias': vitorias_mandante}
+        classificacao_visitante = {'rodada': rodada, 'time': visitante, 'total_pontos': pontos_visitante+total_pontos_visitante, 'gols_pro': gols_pro_visitante+placar_visitante, 'gols_contra': gols_contra_visitante+placar_mandante, 'saldo_gols': (saldo_visitante+placar_visitante)-placar_mandante, 'vitorias': vitorias_visitante}
         uma_rodada.append(classificacao_visitante)
         uma_rodada.append(classificacao_mandante)
     todas_rodadas.append(uma_rodada)
 
-rodada_ordenada = sorted(todas_rodadas[-1], key=operator.itemgetter('total_pontos', 'vitorias', 'saldo_gols', 'gols_pro'), reverse=True)
+writer = pd.ExcelWriter('classificacao_serieB.xlsx')
+for num_rodada, rodada in enumerate(todas_rodadas):
+    rodada_ordenada = sorted(rodada, key=operator.itemgetter('total_pontos', 'vitorias', 'saldo_gols', 'gols_pro'), reverse=True)
+    df_rodadas = pd.DataFrame(data=rodada_ordenada)
 
-writer = pd.ExcelWriter('classificação_serieB.xlsx')
-
-total_jogos.append(dados_jogos)
-    df_rodadas.to_excel(writer, sheet_name=f'Rodada {numero_rodada}')
+    df_rodadas.to_excel(writer, sheet_name=f'Rodada {num_rodada+1}')
 writer.save()
 
