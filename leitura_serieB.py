@@ -50,7 +50,7 @@ for sh in wrkbk.worksheets:
         uma_rodada.append(classificacao_mandante)
     todas_rodadas.append(uma_rodada)
 
-writer = pd.ExcelWriter('classificacao_serieB.xlsx')
+writer = pd.ExcelWriter('classificacao_por_rodada.xlsx')
 for num_rodada, rodada in enumerate(todas_rodadas):
     rodada_ordenada = sorted(rodada, key=operator.itemgetter('total_pontos', 'vitorias', 'saldo_gols', 'gols_pro'), reverse=True)
     df_rodadas = pd.DataFrame(data=rodada_ordenada)

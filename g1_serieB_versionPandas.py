@@ -20,6 +20,7 @@ headers = {
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',
 }
 writer = pd.ExcelWriter('tabela_serieB.xlsx')
+total_jogos = []
 for numero_rodada in range(1, 39, 1):
     response = requests.get(
         f'https://api.globoesporte.globo.com/tabela/009b5a68-dd09-46b8-95b3-293a2d494366/fase/brasileiro-serie-b-2022-fase-unica/rodada/{numero_rodada}/jogos/',
@@ -39,8 +40,8 @@ for numero_rodada in range(1, 39, 1):
         dados_jogos.append(jogo)
         df_rodadas = pd.DataFrame(data=dados_jogos)
 
-
-    df_rodadas.to_excel(writer, sheet_name=f'Sheet_name_{numero_rodada}')
+    total_jogos.append(dados_jogos)
+    df_rodadas.to_excel(writer, sheet_name=f'Rodada {numero_rodada}')
 writer.save()
 
 rodadas = mandantes = visitantes = placares_mand = placares_visit = []
