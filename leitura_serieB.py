@@ -1,7 +1,6 @@
-# import module
 import operator
-
 import openpyxl
+import pandas as pd
 
 # load excel with its path
 wrkbk = openpyxl.load_workbook("tabela_serieB.xlsx")
@@ -53,4 +52,9 @@ for sh in wrkbk.worksheets:
 
 rodada_ordenada = sorted(todas_rodadas[-1], key=operator.itemgetter('total_pontos', 'vitorias', 'saldo_gols', 'gols_pro'), reverse=True)
 
+writer = pd.ExcelWriter('classificação_serieB.xlsx')
+
+total_jogos.append(dados_jogos)
+    df_rodadas.to_excel(writer, sheet_name=f'Rodada {numero_rodada}')
+writer.save()
 
