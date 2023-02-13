@@ -6,6 +6,6 @@ Após ter coletadas as informações e salvo em arquivo, desenvolvi a lógica de
 de acordo com os critérios de desempate do campeonato.
 Por fim, tendo a classificação pronta, parti para a etapa de visualização dos dados. Para isso, trabalhei com a produção de uma tabela no PowerBi e de um gráfico animado
 que mostra a posição de cada time ao longo de todo o campeonato. 
-&nbsp;
+
 Segue o link para visualizar o gráfico de forma interativa: 
 https://app.powerbi.com/view?r=eyJrIjoiN2YzNTAxNmMtODUxYS00ZjNhLThmYmYtNjI2MTFiNzc0NTlhIiwidCI6ImZhNzk1MzFjLThjZTUtNGJkMy05N2VlLTI0NWU2ZWUyNjZiOCJ9
