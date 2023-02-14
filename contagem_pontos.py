@@ -2,7 +2,7 @@ import operator
 import openpyxl
 import pandas as pd
 
-# load excel with its path
+
 wrkbk = openpyxl.load_workbook("tabela_serieB.xlsx")
 todas_rodadas = []
 sh = wrkbk.active
@@ -26,7 +26,6 @@ for sh in wrkbk.worksheets:
             total_pontos_mandante = 0
             total_pontos_visitante = 3
         if cont > 0:
-            # iterate just once and then save the found value; why? to optimize
             time_mandante = next(item for item in todas_rodadas[cont-1] if item["time"] == mandante)
             time_visitante = next(item for item in todas_rodadas[cont-1] if item["time"] == visitante)
             saldo_mandante = time_mandante["saldo_gols"]
@@ -54,7 +53,5 @@ writer = pd.ExcelWriter('classificacao_por_rodada.xlsx')
 for num_rodada, rodada in enumerate(todas_rodadas):
     rodada_ordenada = sorted(rodada, key=operator.itemgetter('total_pontos', 'vitorias', 'saldo_gols', 'gols_pro'), reverse=True)
     df_rodadas = pd.DataFrame(data=rodada_ordenada)
-
     df_rodadas.to_excel(writer, sheet_name=f'Rodada {num_rodada+1}')
 writer.save()
-
