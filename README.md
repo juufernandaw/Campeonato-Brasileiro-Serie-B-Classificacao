@@ -1,4 +1,4 @@
-# Campeonato-Brasileiro-Serie-B-Rodadas
+# Campeonato-Brasileiro-Serie-B-Classificacao
 
 Esse projeto tem como objetivo a construção da tabela de classificação do Campeonato Brasileiro da Série B 2022. Para extrair as informações dos jogos
 foi feito web scraping do site do Globo Esporte, capturando os resultados jogo a jogo, rodada a rodada. O scraping foi feito utilizando Python, por meio da biblioteca Requests.
